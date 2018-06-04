@@ -1,17 +1,18 @@
 <template>
   <div>
-    /users/_id.vue
     <h1>{{ id }}</h1>
+    <img :src="user.avatar_url">
   </div>
 </template>
 
 <script>
 export default {
-  asyncData ({ params }) {
+  async asyncData ({ params, app }) {
     const { id } = params
-    return {
-      id
-    }
+    const user = await app.$axios.$get(
+      `https://api.github.com/users/${id}`
+    )
+    return { user }
   }
 }
 </script>
